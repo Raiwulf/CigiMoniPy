@@ -25,15 +25,12 @@ class MonitorCard(ctk.CTkFrame):
         self.label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
         self.input_mode_var = ctk.StringVar(value=current_input_mode)
         self.dropdown = ctk.CTkOptionMenu(
-            self, variable=self.input_mode_var, values=available_inputs
+            self,
+            variable=self.input_mode_var,
+            values=available_inputs,
+            command=lambda new_mode: switch_input_callback(self.monitor, new_mode),
         )
         self.dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="w", columnspan=2)
-        self.dropdown.bind(
-            "<<OptionMenuSelected>>",
-            lambda event: switch_input_callback(
-                self.monitor, self.input_mode_var.get()
-            ),
-        )
         self.brightness_label = ctk.CTkLabel(self, text="Brightness:")
         self.brightness_label.grid(row=1, column=0, padx=10, pady=5, sticky="w")
         self.brightness_entry = ctk.CTkEntry(self, width=50)
