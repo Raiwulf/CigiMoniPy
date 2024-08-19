@@ -40,7 +40,7 @@ CigiMoniPy is a GUI application for managing monitor settings, including input s
 
 - **Monitor Detection Issues**: Ensure that all monitors are properly connected and detected by your operating system. The application relies on the `monitorcontrol` library to interface with the monitors.
 
-- **Missing Dependencies**: Verify that all required Python packages are installed. Use `pip list` to check if `customtkinter` and `monitorcontrol` are listed.
+- **Missing Dependencies**: Verify that all required Python packages are installed. Use `pip list` to check if `customtkinter`, `monitorcontrol` and `datetime` are listed.
 
 - **Errors**: If you encounter any errors while running the application, check the terminal output for detailed error messages. Ensure your Python environment is properly set up and the necessary permissions are granted for monitor control.
 
