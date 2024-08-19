@@ -75,8 +75,5 @@ class MonitorCard(ctk.CTkFrame):
             self.brightness_entry.insert(0, str(int(self.brightness_value)))
 
     def update_brightness_value(self):
-        try:
-            if self.adjust_brightness_callback:
-                self.adjust_brightness_callback(self.monitor, self.brightness_value)
-        except Exception as e:
-            print(f"Failed to adjust brightness: {e}")
+        if self.adjust_brightness_callback:
+            self.adjust_brightness_callback(self.monitor, self.brightness_value)

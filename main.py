@@ -11,7 +11,7 @@ def load_monitors(app):
             create_monitor_cards(app, monitors)
         remove_loading_label(app)
     except Exception as e:
-        app.append_log(app.log_event(f"Error loading monitors: {e}"))
+        app.log_event(f"Error loading monitors: {e}")
 
 
 def create_monitor_cards(app, monitors):
@@ -26,7 +26,7 @@ def create_monitor_cards(app, monitors):
             switch_input_mode,
             adjust_brightness,
         ).pack(fill=ctk.X, pady=5)
-    app.append_log(app.log_event("Monitor cards created successfully."))
+    app.log_event("Monitor cards created successfully.")
 
 
 def remove_loading_label(app):
@@ -58,11 +58,11 @@ def switch_input_mode(monitor, new_input_mode):
     try:
         input_source = InputSource[new_input_mode]
     except KeyError:
-        app.append_log(app.log_event(f"Invalid input source: {new_input_mode}"))
+        app.log_event(f"Invalid input source: {new_input_mode}")
         return
     with monitor:
         monitor.set_input_source(input_source)
-    app.append_log(app.log_event(f"Switched to {new_input_mode}"))
+    app.log_event(f"Switched to {new_input_mode}")
 
 
 def adjust_brightness(monitor, brightness_value):
@@ -71,15 +71,12 @@ def adjust_brightness(monitor, brightness_value):
             brightness_value = int(brightness_value)
             if 1 <= brightness_value <= 100:
                 monitor.set_luminance(brightness_value)
-                app.append_log(app.log_event(f"Brightness set to {brightness_value}"))
+                app.log_event(f"Brightness set to {brightness_value}")
             else:
-                app.append_log(
-                    app.log_event(
-                        f"Brightness value {brightness_value} is out of range."
-                    )
-                )
+                app.log_event(f"Brightness value {brightness_value} is out of range.")
+
     except Exception as e:
-        app.append_log(app.log_event(f"Failed to adjust brightness: {e}"))
+        app.log_event(f"Failed to adjust brightness: {e}")
 
 
 if __name__ == "__main__":
