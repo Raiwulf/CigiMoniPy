@@ -23,15 +23,13 @@ CigiMoniPy is a GUI application for managing monitor settings, including input s
 
 ### Running the Application
 
-1. **Save the Code**: Save the provided Python script to a file named `monitor_app.py`.
-
-2. **Run the Application**: Open a terminal, navigate to the directory where you saved `monitor_app.py`, and run the script using Python:
+1. **Run the Application**: Open a terminal, navigate to the directory where you saved `main.py`, and run the script using Python:
 
    ```bash
-   python monitor_app.py
+   python main.py
    ```
 
-3. **Using the Application**:
+2. **Using the Application**:
    - The application window will display a list of connected monitors.
    - Each monitor card shows the monitor label, current input mode, and brightness settings.
    - **Change Input Mode**: Use the dropdown menu to select a new input mode for the monitor.
