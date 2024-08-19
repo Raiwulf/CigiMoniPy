@@ -2,6 +2,9 @@
 
 CigiMoniPy is a GUI application for managing monitor settings, including input source selection and brightness adjustment. It utilizes `customtkinter` for the user interface and `monitorcontrol` for interacting with the monitors.
 
+![image](https://github.com/user-attachments/assets/b4f19ce8-f497-4779-885b-fa5d41af0f55)
+
+
 ## Installation
 
 ### Prerequisites
