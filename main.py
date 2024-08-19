@@ -1,9 +1,8 @@
-import tkinter as tk
-from tkinter import ttk
+import customtkinter as ctk
 from monitorcontrol import get_monitors, InputSource
 
 
-class MonitorCard(tk.Frame):
+class MonitorCard(ctk.CTkFrame):
     def __init__(
         self,
         parent,
@@ -15,42 +14,37 @@ class MonitorCard(tk.Frame):
     ):
         super().__init__(parent)
         self.monitor = monitor
-
-        # Use monitor_label to display monitor name
-        self.label = tk.Label(self, text=monitor_label)
-        self.label.pack(side=tk.LEFT, padx=10)
-
-        # Dropdown list for selecting input mode
-        self.input_mode_var = tk.StringVar(value=current_input_mode)
-        self.dropdown = ttk.Combobox(
-            self, textvariable=self.input_mode_var, state="readonly"
+        self.label = ctk.CTkLabel(self, text=monitor_label)
+        self.label.pack(side=ctk.LEFT, padx=10)
+        self.input_mode_var = ctk.StringVar(value=current_input_mode)
+        self.dropdown = ctk.CTkOptionMenu(
+            self, variable=self.input_mode_var, values=available_inputs
         )
-
-        # Populate dropdown with available inputs
-        self.dropdown["values"] = available_inputs
-        self.dropdown.pack(side=tk.LEFT, padx=10)
-
-        # Monitor input switch callback
+        self.dropdown.pack(side=ctk.LEFT, padx=10)
         self.dropdown.bind(
-            "<<ComboboxSelected>>",
+            "<<OptionMenuSelected>>",
             lambda event: switch_input_callback(
                 self.monitor, self.input_mode_var.get()
             ),
         )
+        self.pack(fill=ctk.X, pady=5)
 
-        self.pack(fill=tk.X, pady=5)
 
-
-class MonitorApp(tk.Tk):
+class MonitorApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Monitor Input Manager")
-
-        # Load monitors and create MonitorCard for each
-        self.load_monitors()
+        self.title("CigiMoniPy")
+        self.geometry("400x200")
+        self.loading_label = ctk.CTkLabel(self, text="Loading...")
+        self.loading_label.pack(pady=20)
+        self.after(100, self.load_monitors)
 
     def load_monitors(self):
         monitors = self.get_active_monitors()
+        self.create_monitor_cards(monitors)
+        self.remove_loading_label()
+
+    def create_monitor_cards(self, monitors):
         for monitor, input_mode, available_inputs in monitors:
             monitor_label = self.get_monitor_name(monitor)
             MonitorCard(
@@ -62,47 +56,37 @@ class MonitorApp(tk.Tk):
                 self.switch_input_mode,
             )
 
+    def remove_loading_label(self):
+        self.loading_label.pack_forget()
+
     def get_active_monitors(self):
         monitors = []
+        predefined_inputs = [source.name for source in InputSource]
         for monitor in get_monitors():
             with monitor:
-                # Get current input source
-                current_input_source = monitor.get_input_source()
-                input_mode = current_input_source.name
-
-                # Define a list of possible input sources (you might need to adjust this based on your monitors)
-                available_inputs = [source.name for source in InputSource]
-
-            monitors.append((monitor, input_mode, available_inputs))
+                try:
+                    current_input_source = monitor.get_input_source()
+                    input_mode = current_input_source.name
+                except AttributeError:
+                    input_mode = "Unknown"
+                available_inputs = predefined_inputs
+                monitors.append((monitor, input_mode, available_inputs))
         return monitors
 
     def get_monitor_name(self, monitor):
         with monitor:
             capabilities = monitor.get_vcp_capabilities()
-
-            # Debug: Print the raw capabilities dictionary to the console
-            print(f"Raw VCP Capabilities: {capabilities}")
-
-            # Extract model name from the capabilities dictionary
             monitor_name = capabilities.get("model", "Unknown Monitor")
-
-            # Debug: Print the derived monitor name to the console
-            print(f"Derived Monitor Name: {monitor_name}")
-
         return monitor_name
 
     def switch_input_mode(self, monitor, new_input_mode):
-        # Convert the new_input_mode to InputSource
         try:
             input_source = InputSource[new_input_mode]
         except KeyError:
             print(f"Invalid input source: {new_input_mode}")
             return
-
         with monitor:
-            # Set the new input source
             monitor.set_input_source(input_source)
-
         print(f"Switched to {new_input_mode}")
 
 
