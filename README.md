@@ -2,8 +2,7 @@
 
 CigiMoniPy is a GUI application for managing monitor settings, including input source selection and brightness adjustment. It utilizes `customtkinter` for the user interface and `monitorcontrol` for interacting with the monitors.
 
-![image](https://github.com/user-attachments/assets/b4f19ce8-f497-4779-885b-fa5d41af0f55)
-
+![image](https://github.com/user-attachments/assets/933e1932-655a-42c5-848b-6dfcddea62de)
 
 ## Installation
 
@@ -14,7 +13,7 @@ CigiMoniPy is a GUI application for managing monitor settings, including input s
 2. **Install Dependencies**: Install the required Python packages using `pip`. Open a terminal and run the following commands:
 
    ```bash
-   pip install customtkinter monitorcontrol
+   pip install customtkinter monitorcontrol datetime
    ```
 
    This will install `customtkinter` for the graphical interface and `monitorcontrol` for monitor management.
@@ -36,13 +35,6 @@ CigiMoniPy is a GUI application for managing monitor settings, including input s
    - **Adjust Brightness**:
      - **Slider**: Move the slider to adjust the brightness.
      - **Entry Field**: Type a value in the entry field to set the brightness. The value must be between 1 and 100.
-
-### Key Functions
-
-- **`get_active_monitors`**: Retrieves a list of active monitors and their current input sources.
-- **`get_monitor_name`**: Fetches the model name of the monitor using its VCP capabilities.
-- **`switch_input_mode`**: Changes the input source of the monitor.
-- **`adjust_brightness`**: Sets the brightness level of the monitor.
 
 ## Troubleshooting
 
